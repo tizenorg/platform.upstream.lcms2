@@ -914,7 +914,7 @@ void InSymbol(cmsIT8* it8)
                     return;
                 }
 
-                FileNest->Stream = fopen(FileNest->FileName, "rt");
+                FileNest->Stream = fopen(FileNest->FileName, "rte");
                 if (FileNest->Stream == NULL) {
 
                         SynError(it8, "File %s not found", FileNest->FileName);
@@ -1744,7 +1744,7 @@ cmsBool CMSEXPORT cmsIT8SaveToFile(cmsHANDLE hIT8, const char* cFileName)
 
     memset(&sd, 0, sizeof(sd));
 
-    sd.stream = fopen(cFileName, "wt");
+    sd.stream = fopen(cFileName, "wte");
     if (!sd.stream) return FALSE;
 
     for (i=0; i < it8 ->TablesCount; i++) {
@@ -2252,7 +2252,7 @@ cmsBool IsMyFile(const char* FileName)
    cmsUInt32Number Size;
    cmsUInt8Number Ptr[133];
 
-   fp = fopen(FileName, "rt");
+   fp = fopen(FileName, "rte");
    if (!fp) {
        cmsSignalError(0, cmsERROR_FILE, "File '%s' not found", FileName);
        return FALSE;
@@ -2330,7 +2330,7 @@ cmsHANDLE  CMSEXPORT cmsIT8LoadFromFile(cmsContext ContextID, const char* cFileN
      if (!hIT8) return NULL;
 
 
-     it8 ->FileStack[0]->Stream = fopen(cFileName, "rt");
+     it8 ->FileStack[0]->Stream = fopen(cFileName, "rte");
 
      if (!it8 ->FileStack[0]->Stream) {
          cmsIT8Free(hIT8);
