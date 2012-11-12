@@ -30,8 +30,10 @@
 
 // ********** Configuration toggles ****************************************
 
-// Uncomment this one if you are using big endian machines
-// #define CMS_USE_BIG_ENDIAN   1
+#include <endian.h>
+#if __BYTE_ORDER == __BIG_ENDIAN
+#define USE_BIG_ENDIAN   1
+#endif
 
 // Uncomment this one if your compiler/machine does NOT support the
 // "long long" type.
