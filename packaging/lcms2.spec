@@ -2,15 +2,14 @@
 Name:           lcms2
 Summary:        Little CMS Engine - A color managment library and tools
 License:        MIT
-Group:          Productivity/Graphics/Other
+Group:          Graphics/Libraries
 Url:            http://www.littlecms.com/
-Version:        2.3
+Version:        2.4
 Release:        0
 BuildRequires:  libjpeg8-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        http://sourceforge.net/projects/lcms/files/lcms/%{version}/%{name}-%{version}.tar.gz
 
 %description
@@ -21,30 +20,22 @@ Color Consortium standard (ICC), which is the modern standard when
 regarding to color management. The ICC specification is widely used and is
 referred to in many International and other de-facto standards.
 
-%package -n %{lname}
+%package -n libcms2
 Summary:        Libraries for the Little CMS Engine
-Group:          System/Libraries
+Group:          Graphics/Libraries
 
-%description -n %{lname}
+%description -n libcms2
 Little CMS Engine - A color managment library and tools.
 
 %package -n liblcms2-devel
 Summary:        Include Files and Libraries Mandatory for Development
-Group:          Development/Libraries/C and C++
-Requires:       %{lname} = %{version} glibc-devel
+Group:          Development/Libraries
+Requires:       libcms2 = %{version}
+Requires:       glibc-devel
 
 %description -n liblcms2-devel
 This package contains all necessary include files and libraries needed
 to develop applications that require these.
-
-%package -n liblcms2-doc
-Summary:        User and developer documentation for lcms2
-Group:          Documentation/Other
-BuildArch:      noarch
-
-%description -n liblcms2-doc
-This package contains user and developer documentation for lcms2.
-
 
 %prep
 %setup -q
@@ -52,39 +43,29 @@ This package contains user and developer documentation for lcms2.
 chmod a-x doc/* COPYING AUTHORS
 
 %build
-
 %configure --disable-static
-
 make %{?_smp_flags}
 
 %install
-
 %make_install
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+%post -n libcms2 -p /sbin/ldconfig
 
-%post -n %{lname} -p /sbin/ldconfig
-
-%postun -n %{lname} -p /sbin/ldconfig
+%postun -n libcms2 -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root)
-%doc COPYING AUTHORS
+%license COPYING 
 %{_bindir}/*
-%{_mandir}/man?/*.*
 
-%files -n %{lname}
+%files -n libcms2
 %defattr(-,root,root)
 %{_libdir}/liblcms2.so.2*
 
 %files -n liblcms2-devel
 %defattr(-,root,root)
-
 %{_includedir}/*.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
-%files -n liblcms2-doc
-%defattr(-,root,root)
-%doc doc/*.pdf
+%docs_package
