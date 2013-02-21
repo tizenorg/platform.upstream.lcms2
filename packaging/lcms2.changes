@@ -1,0 +1,5 @@
+* Wed Feb 20 2013 Anas Nashif <anas.nashif@intel.com> upstream/2.4@9b8eca7
+- Update to 2.4
+- cleanup spec
+- Add multilib support
+
