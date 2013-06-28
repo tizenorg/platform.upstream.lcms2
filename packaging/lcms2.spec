@@ -11,6 +11,7 @@ BuildRequires:  libtiff-devel
 BuildRequires:  pkg-config
 BuildRequires:  zlib-devel
 Source0:        http://sourceforge.net/projects/lcms/files/lcms/%{version}/%{name}-%{version}.tar.gz
+Source1001: 	lcms2.manifest
 
 %description
 Littlecms is a small speed optimized color management engine.
@@ -39,6 +40,7 @@ to develop applications that require these.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 chmod a-x doc/* COPYING AUTHORS
 
@@ -54,15 +56,18 @@ make %{?_smp_flags}
 %postun -n libcms2 -p /sbin/ldconfig
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %license COPYING 
 %{_bindir}/*
 
 %files -n libcms2
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/liblcms2.so.2*
 
 %files -n liblcms2-devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
 %{_libdir}/*.so
